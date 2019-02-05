@@ -1,23 +1,27 @@
 <template>
   <div id="app">
-    <app-header />
-    <router-view></router-view>
+    <app-header/>
+   <router-view ></router-view>
   </div>
 </template>
 
 <script>
-  import Header from './components/header/header.vue'
-  export default {
-    name: 'app',
-    components: {
-      'app-header': Header
-    }
+import Header from "./components/header/header.vue";
+export default {
+  name: "app",
+  components: {
+    "app-header": Header
+  },
+  created() {
+    this.$store.dispatch("autoTrySignIn");
   }
+};
 </script>
 
 <style>
-  body, html {
-    margin: 0;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  }
+body,
+html {
+  margin: 0;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
 </style>
