@@ -3,6 +3,9 @@
     <h1>That's the dashboard!</h1>
     <p>You should only get here if you're authenticated!</p>
     <p v-if="email">Your e-mail address:{{email}}</p>
+    <p>
+      <img class="logo" alt="Vue logo" src="../../assets/logo.png">
+    </p>
   </div>
 </template>
 <script>
@@ -27,4 +30,5 @@ p {
 p {
   color: red;
 }
+
 </style>

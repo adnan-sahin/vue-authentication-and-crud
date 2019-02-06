@@ -1,5 +1,5 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
 
 import WelcomePage from './components/welcome/welcome.vue'
 import DashboardPage from './components/dashboard/dashboard.vue'
@@ -7,26 +7,30 @@ import SignupPage from './components/auth/signup.vue'
 import SigninPage from './components/auth/signin.vue'
 import BooksPage from './components/books/books.vue'
 
+
 import store from './store';
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
+// eslint-disable-next-line no-sparse-arrays
 const routes = [
-  { path: '/', component: WelcomePage },
-  { path: '/signup', component: SignupPage },
-  { path: '/signin', component: SigninPage },
+  { name: 'Welcome', path: '/', component: WelcomePage },
+  { name: 'Signup', path: '/signup', component: SignupPage },
+  ,
+  { name: 'SignIn', path: '/signin', component: SigninPage },
   {
-    path: '/dashboard', component: DashboardPage,
+    name: 'Dashboard',
+    path: '/dashboard',
+    component: DashboardPage,
     beforeEnter(to, from, next) {
       if (store.state.idToken) {
         next();
-      }
-      else {
+      } else {
         next('/signin');
       }
     }
   },
-  { path: '/books', component: BooksPage }
+  { path: '/books', component: BooksPage },
 ]
 
-export default new VueRouter({ mode: 'history', routes })
+export default new VueRouter({ mode: 'history', routes });
