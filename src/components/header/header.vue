@@ -14,6 +14,9 @@
         <li v-if="auth">
           <router-link to="/dashboard">Dashboard</router-link>
         </li>
+        <li v-if="auth">
+          <router-link to="/books">Books</router-link>
+        </li>
       </ul>
     </nav>
   </header>

@@ -4,6 +4,15 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import axios from 'axios';
+import Vuelidate from 'vuelidate';
+import Vuetify from 'vuetify';
+import 'vuetify/dist/vuetify.min.css'
+
+Vue.use(Vuetify);
+
+Vue.use(Vuelidate);
+
+
 
 axios.defaults.baseURL = 'https://vue-sample-app-13573.firebaseio.com/';
 axios.defaults.headers.common['Authorization'] = 'efrewf';
