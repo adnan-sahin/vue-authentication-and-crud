@@ -1,27 +1,37 @@
 <template>
-  <div id="signup">
-    <div class="signup-form">
-      <form @submit.prevent="onSubmit">
-        <div class="input">
+  <div class="container">
+    <form @submit.prevent="onSubmit">
+      <div class="form-horizontal">
+        <div class="form-group">
           <label for="email">E-mail</label>
-          <input type="email" id="email" @input="$v.email.$touch()" v-model="email">
-          <div>{{$v}}</div>
+          <input
+            class="form-control"
+            type="email"
+            id="email"
+            @input="$v.email.$touch()"
+            v-model="email"
+          >
         </div>
-        <div class="input">
+        <div class="form-group">
           <label for="age">Your Age</label>
-          <input type="number" id="age" v-model.number="age">
+          <input class="form-control" type="number" id="age" v-model.number="age">
         </div>
-        <div class="input">
+        <div class="form-group">
           <label for="password">Password</label>
-          <input type="password" id="password" v-model="password">
+          <input class="form-control" type="password" id="password" v-model="password">
         </div>
-        <div class="input">
+        <div class="form-group">
           <label for="confirm-password">Confirm Password</label>
-          <input type="password" id="confirm-password" v-model="confirmPassword">
+          <input
+            class="form-control"
+            type="password"
+            id="confirm-password"
+            v-model="confirmPassword"
+          >
         </div>
-        <div class="input">
+        <div class="form-group">
           <label for="country">Country</label>
-          <select id="country" v-model="country">
+          <select class="form-control" id="country" v-model="country">
             <option value="turkey">Turkey</option>
             <option value="france">France</option>
             <option value="usa">USA</option>
@@ -33,24 +43,33 @@
         </div>
         <div class="hobbies">
           <h3>Add Some Interest | Hobbies</h3>
-          <button @click="onAddHobby" type="button">Add Interest | Hobby</button>
-          <div class="hobby-list">
-            <div class="input" v-for="(hobbyInput, index) in hobbyInputs" :key="hobbyInput.id">
+          <button class="btn btn-success" @click="onAddHobby" type="button">Add Interest | Hobby</button>
+          <div class="hobby-list" v-for="(hobbyInput, index) in hobbyInputs" :key="hobbyInput.id">
+            <div class="form-group hobby">
               <label :for="hobbyInput.id">Hobby #{{ index }}</label>
-              <input type="text" :id="hobbyInput.id" v-model="hobbyInput.value">
-              <button @click="onDeleteHobby(hobbyInput.id)" type="button">X</button>
+              <input
+                class="form-control"
+                type="text"
+                :id="hobbyInput.id"
+                v-model="hobbyInput.value"
+              >
+              <button
+                class="btn btn-danger btn-delete"
+                @click="onDeleteHobby(hobbyInput.id)"
+                type="button"
+              >X</button>
             </div>
           </div>
         </div>
-        <div class="input inline">
+        <div class="form-group">
           <input type="checkbox" id="terms" v-model="terms">
           <label for="terms">Accept Terms of Use and Conditions</label>
         </div>
-        <div class="submit">
-          <button type="submit">Submit</button>
+        <div class="form-group">
+          <button class="btn btn-primary" type="submit">Submit</button>
         </div>
-      </form>
-    </div>
+      </div>
+    </form>
   </div>
 </template>
 
@@ -103,89 +122,22 @@ export default {
 </script>
 
 <style scoped>
-.signup-form {
-  width: 400px;
-  margin: 30px auto;
-  border: 1px solid #eee;
-  padding: 20px;
-  box-shadow: 0 2px 3px #ccc;
+.container {
+  max-width: 600px;
 }
-
-.input {
-  margin: 10px auto;
+.hobby-list {
+  margin-top: 30px;
 }
-
-.input label {
-  display: block;
-  color: #4e4e4e;
-  margin-bottom: 6px;
+.hobby {
+  display: flex;
+  flex-direction: row;
 }
-
-.input.inline label {
-  display: inline;
-}
-
-.input input {
-  font: inherit;
-  width: 100%;
-  padding: 6px 12px;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-}
-
-.input.inline input {
-  width: auto;
-}
-
-.input input:focus {
-  outline: none;
-  border: 1px solid #445ba5;
-  background-color: #eee;
-}
-
-.input select {
-  border: 1px solid #ccc;
-  font: inherit;
-}
-
-.hobbies button {
-  border: 1px solid #445ba5;
-  background: #445ba5;
-  color: white;
-  padding: 6px;
-  font: inherit;
-  cursor: pointer;
-}
-
-.hobbies button:hover,
-.hobbies button:active {
-  background-color: #5669a8;
+.btn-delete {
+  height: 35px;
+  margin-left: 5px;
 }
 
 .hobbies input {
   width: 90%;
-}
-
-.submit button {
-  border: 1px solid #445ba5;
-  color: #445ba5;
-  padding: 10px 20px;
-  font: inherit;
-  cursor: pointer;
-}
-
-.submit button:hover,
-.submit button:active {
-  background-color: #445ba5;
-  color: white;
-}
-
-.submit button[disabled],
-.submit button[disabled]:hover,
-.submit button[disabled]:active {
-  border: 1px solid #ccc;
-  background-color: transparent;
-  color: #ccc;
-  cursor: not-allowed;
 }
 </style>

@@ -2,16 +2,24 @@
   <div id="signin">
     <div class="signin-form">
       <form @submit.prevent="onSubmit">
-        <div class="input">
-          <label for="email">E-mail</label>
-          <input type="email" id="email" v-model="email">
+        <div class="form-group">
+          <label for="email">Email address</label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            v-validate="'required | email'"
+            class="form-control"
+            v-model="email"
+          >
+          <p>{{errors.first('email')}}</p>
         </div>
-        <div class="input">
+        <div class="form-group">
           <label for="password">Password</label>
-          <input type="password" id="password" v-model="password">
+          <input type="password" id="password" class="form-control" v-model="password">
         </div>
-        <div class="submit">
-          <button type="submit">Submit</button>
+        <div class="form-group">
+          <button class="btn btn-primary" type="submit">Submit</button>
         </div>
       </form>
     </div>
@@ -19,6 +27,7 @@
 </template>
 
 <script>
+import { required, email, minLength } from "vuelidate/lib/validators";
 export default {
   data() {
     return {
