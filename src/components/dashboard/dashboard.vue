@@ -9,14 +9,19 @@
   </div>
 </template>
 <script>
+import { mapGetters, mapActions } from "vuex";
 export default {
   computed: {
+    ...mapGetters("users", { user: "user" }),
     email() {
-      return this.$store.getters.user ? this.$store.getters.user.email : false;
+      return this.user ? this.user.email : false;
     }
   },
   created() {
-    this.$store.dispatch("getUser");
+    this.getUser();
+  },
+  methods: {
+    ...mapActions("users", ["getUser"])
   }
 };
 </script>
@@ -30,5 +35,4 @@ p {
 p {
   color: red;
 }
-
 </style>

@@ -7,13 +7,17 @@
 
 <script>
 import Header from "./components/header/header.vue";
+import { mapActions } from "vuex";
 export default {
   name: "app",
   components: {
     "app-header": Header
   },
   created() {
-    this.$store.dispatch("autoTrySignIn");
+    this.autoTrySignIn();
+  },
+  methods: {
+    ...mapActions("users", ["autoTrySignIn"])
   }
 };
 </script>

@@ -5,7 +5,7 @@ import router from './router';
 import store from './store';
 import axios from 'axios';
 import VeeValidate from 'vee-validate';
-import { ValidationProvider } from 'vee-validate';
+// import { ValidationProvider } from 'vee-validate';
 import Vuetify from 'vuetify';
 import 'vuetify/dist/vuetify.min.css';
 

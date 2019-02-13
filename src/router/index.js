@@ -1,14 +1,14 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-import WelcomePage from './components/welcome/welcome.vue'
-import DashboardPage from './components/dashboard/dashboard.vue'
-import SignupPage from './components/auth/signup.vue'
-import SigninPage from './components/auth/signin.vue'
-import BooksPage from './components/books/books.vue'
+import WelcomePage from '../components/welcome/welcome.vue'
+import DashboardPage from '../components/dashboard/dashboard.vue'
+import SignupPage from '../components/auth/signup.vue'
+import SigninPage from '../components/auth/signin.vue'
+import BooksPage from '../components/books/books.vue'
 
 
-import store from './store';
+import store from '../store/modules/users';
 
 Vue.use(VueRouter);
 

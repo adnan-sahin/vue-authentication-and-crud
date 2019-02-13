@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import { required, email, minLength } from "vuelidate/lib/validators";
 export default {
   data() {
@@ -36,13 +37,13 @@ export default {
     };
   },
   methods: {
+    ...mapActions("users", ["signIn"]),
     onSubmit() {
       const formData = {
         email: this.email,
         password: this.password
       };
-      console.log(formData);
-      this.$store.dispatch("signIn", {
+      this.signIn({
         email: formData.email,
         password: formData.password
       });

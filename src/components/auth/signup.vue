@@ -74,6 +74,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import { required, email } from "vuelidate/lib/validators";
 export default {
   data() {
@@ -94,6 +95,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions("users", ["signUp"]),
     onAddHobby() {
       const newHobby = {
         id: Math.random() * Math.random() * 1000,
@@ -114,8 +116,7 @@ export default {
         hobbies: this.hobbyInputs.map(hobby => hobby.value),
         terms: this.terms
       };
-      console.log(formData);
-      this.$store.dispatch("signUp", formData);
+      this.signUp(formData);
     }
   }
 };

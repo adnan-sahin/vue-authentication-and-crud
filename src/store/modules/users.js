@@ -1,12 +1,10 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
 
-Vue.use(Vuex);
-import axios from './axios-auth';
+import axios from '../../axios-auth';
 import globalAxios from 'axios';
-import router from './router';
+import router from '../../router';
 /* eslint-disable no-console */
-export default new Vuex.Store({
+export default {
+  namespaced: true,
   state: {
     idToken: null,
     userId: null,
@@ -26,7 +24,7 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    signUp({ commit, dispatch, state }, authData) {
+    signUp({ commit, dispatch }, authData) {
       axios
         .post('/signupNewUser?key=AIzaSyAQDme3NjAf89FTgR59tK4osgHF5uyuUI4', {
           email: authData.email,
@@ -34,14 +32,12 @@ export default new Vuex.Store({
           returnSecureToken: true
         })
         .then(res => {
-          console.log(res);
           commit('authUser', {
             token: res.data.idToken,
             userId: res.data.localId
           });
           const userId = res.data.localId;
           const userData = Object.assign({}, authData, { userId });
-          console.log('userdata', userData);
           dispatch('saveUser', userData);
           SaveToLocalStorage(res.data);
           dispatch('setSignOutTimer', res.data.expiresIn);
@@ -66,7 +62,6 @@ export default new Vuex.Store({
           returnSecureToken: true
         })
         .then(res => {
-          console.log(res);
           commit('authUser', {
             token: res.data.idToken,
             userId: res.data.localId
@@ -84,7 +79,7 @@ export default new Vuex.Store({
       router.push({ name: 'SignIn' });
     },
 
-    saveUser({ commit, state }, userData) {
+    saveUser({ state }, userData) {
       if (!state.idToken) {
         return;
       }
@@ -94,7 +89,7 @@ export default new Vuex.Store({
         .catch(error => console.log(error));
     },
 
-    setSignOutTimer({ commit, dispatch }, expiresIn) {
+    setSignOutTimer({  dispatch }, expiresIn) {
       setTimeout(() => {
         dispatch('signOut');
       }, expiresIn * 1000);
@@ -109,7 +104,6 @@ export default new Vuex.Store({
           '/users.json' + '?auth=' + state.idToken + '&userId=' + state.userId
         )
         .then(res => {
-          console.info('getUser', res.data);
           const users = [];
           const data = res.data;
           // // Object.entries(data).forEach(item => {
@@ -137,7 +131,7 @@ export default new Vuex.Store({
       return state.idToken !== null;
     }
   }
-});
+};
 
 function SaveToLocalStorage(authData) {
   let now = new Date();

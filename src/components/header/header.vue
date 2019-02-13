@@ -15,7 +15,7 @@
           <router-link to="/dashboard">Dashboard</router-link>
         </li>
         <li v-if="auth">
-         <router-link to="/books">Books</router-link>
+          <router-link to="/books">Books</router-link>
         </li>
         <li v-if="auth">
           <span class="sign-out" @click="signOut" to="/signout">Sign Out</span>
@@ -26,16 +26,18 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 export default {
   computed: {
+    ...mapGetters("users", { isAuthenticated: "isAuthenticated" }),
     auth() {
-      return this.$store.getters.isAuthenticated;
+      return this.isAuthenticated;
     }
   },
   methods: {
+    ...mapActions("users", { signout: "signOut" }),
     signOut() {
-      console.log("ok");
-      this.$store.dispatch("signOut");
+      this.signout();
     }
   }
 };
