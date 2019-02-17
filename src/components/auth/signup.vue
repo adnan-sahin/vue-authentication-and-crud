@@ -95,7 +95,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions("users", ["signUp"]),
+    ...mapActions("user", ["signUp"]),
     onAddHobby() {
       const newHobby = {
         id: Math.random() * Math.random() * 1000,

@@ -29,13 +29,13 @@
 import { mapGetters, mapActions } from "vuex";
 export default {
   computed: {
-    ...mapGetters("users", { isAuthenticated: "isAuthenticated" }),
+    ...mapGetters("user", { isAuthenticated: "isAuthenticated" }),
     auth() {
       return this.isAuthenticated;
     }
   },
   methods: {
-    ...mapActions("users", { signout: "signOut" }),
+    ...mapActions("user", { signout: "signOut" }),
     signOut() {
       this.signout();
     }

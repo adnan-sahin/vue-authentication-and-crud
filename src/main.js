@@ -6,6 +6,7 @@ import store from './store';
 import axios from 'axios';
 import VeeValidate from 'vee-validate';
 // import { ValidationProvider } from 'vee-validate';
+import 'babel-polyfill';
 import Vuetify from 'vuetify';
 import 'vuetify/dist/vuetify.min.css';
 
@@ -19,7 +20,7 @@ Vue.use(Vuetify);
 
 Vue.use(VeeValidate);
 
-axios.defaults.baseURL = 'https://vue-sample-app-13573.firebaseio.com/';
+axios.defaults.baseURL = 'http://localhost:4010/';
 axios.defaults.headers.common['Authorization'] = 'efrewf';
 axios.defaults.headers.get['Accepts'] = 'application/json';
 

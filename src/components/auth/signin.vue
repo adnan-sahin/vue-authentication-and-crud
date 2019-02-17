@@ -37,7 +37,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions("users", ["signIn"]),
+    ...mapActions("user", ["signIn"]),
     onSubmit() {
       const formData = {
         email: this.email,

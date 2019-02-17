@@ -12,7 +12,7 @@
 import { mapGetters, mapActions } from "vuex";
 export default {
   computed: {
-    ...mapGetters("users", { user: "user" }),
+    ...mapGetters("user", { user: "user" }),
     email() {
       return this.user ? this.user.email : false;
     }
@@ -21,7 +21,7 @@ export default {
     this.getUser();
   },
   methods: {
-    ...mapActions("users", ["getUser"])
+    ...mapActions("user", ["getUser"])
   }
 };
 </script>

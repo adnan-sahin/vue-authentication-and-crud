@@ -1,8 +1,12 @@
 <template>
-  <div id="app">
-    <app-header/>
-    <router-view></router-view>
-  </div>
+  <v-app id="app">
+    <v-content>
+      <v-container>
+        <app-header/>
+        <router-view></router-view>
+      </v-container>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
@@ -17,15 +21,10 @@ export default {
     this.autoTrySignIn();
   },
   methods: {
-    ...mapActions("users", ["autoTrySignIn"])
+    ...mapActions("user", ["autoTrySignIn"])
   }
 };
 </script>
 
 <style>
-body,
-html {
-  margin: 0;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
 </style>
