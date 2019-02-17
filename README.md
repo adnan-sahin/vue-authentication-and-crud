@@ -1,4 +1,4 @@
-# vue-authentication-app
+# vue-authentication-and-crud-app
 
 ## Project setup
 ```
