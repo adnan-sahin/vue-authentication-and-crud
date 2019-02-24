@@ -21,8 +21,8 @@ const actions = {
     payload.id = index++;
     commit(mutationTypes.ADD_NOTIFICATION, payload)
   },
-  remove({ commit }, notification) {
-    commit(mutationTypes.REMOVE_NOTIFICATION, notification)
+  async remove({ commit }, notification) {
+    return await commit(mutationTypes.REMOVE_NOTIFICATION, notification)
   }
 };
 

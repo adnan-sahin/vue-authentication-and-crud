@@ -1,11 +1,15 @@
 <template>
   <div>
-    <transition name="fade">
-      <div v-if="notification" class="bar" :class="notificationClass">
+    <!-- <transition name="fade">
+      <div v-if="show" class="bar" :class="notificationClass">
         <span @click="clear" class="close">X</span>
-        {{ notification.message}}
+        {{ item.id +" : " +item.message}}
       </div>
-    </transition>
+    </transition>-->
+    <v-snackbar v-model="show" :bottom="true" :right="true">
+      {{ item.id +" : " +item.message}}
+      <v-btn :color="item.type" flat @click="clear">Close</v-btn>
+    </v-snackbar>
   </div>
 </template>
 
@@ -18,27 +22,27 @@ export default {
   data() {
     return {
       timeout: null,
-      notification: null
+      show: false
     };
   },
   computed: {
     notificationClass() {
-      return `text-${this.notification.type}-bar`;
+      return `text-${this.item.type}-bar`;
     }
   },
   methods: {
     ...mapActions("notification", ["remove"]),
     clear() {
-      this.remove(this.notification);
+      this.remove(this.item);
     }
   },
   mounted() {
-    this.notification = this.item;
-    this.timeout =
-      setTimeout(() => {
-        this.remove(this.notification).then(() => {});
-      }, 4000) +
-      Math.random() * 10000000;
+    this.show = true;
+    this.timeout = setTimeout(() => {
+      this.remove(this.item).then(() => {
+        this.show = false;
+      });
+    }, 4000);
   },
   beforeDestroy() {
     clearTimeout(this.timeout);
@@ -82,5 +86,8 @@ export default {
 .fade-leave-to {
   opacity: 0;
   transition: opacity 0.5s;
+}
+.v-btn {
+  outline: none;
 }
 </style>

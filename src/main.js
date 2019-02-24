@@ -9,6 +9,8 @@ import 'vuetify/dist/vuetify.min.css';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import 'nprogress/nprogress.css';
+
 import VueI18n from 'vue-i18n';
 
 Vue.use(VueI18n);
