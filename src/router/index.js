@@ -6,6 +6,8 @@ import DashboardPage from '../components/dashboard/dashboard.vue';
 import SignupPage from '../components/auth/signup.vue';
 import SigninPage from '../components/auth/signin.vue';
 import BooksPage from '../components/Book/List.vue';
+import NotFoundPage from '../components/Error/NotFound.vue';
+import NetworkIssuePage from '../components/Error/NetworkIssue.vue';
 
 
 import store from '../store/modules/user';
@@ -29,7 +31,10 @@ const routes = [
       }
     }
   },
-  { path: '/books', component: BooksPage }
+  { name: 'Books', path: '/books', component: BooksPage },
+  { name: '404', path: '/404', component: NotFoundPage, props: true },
+  { name: 'NetworkIssue', path: '/network-issue', component: NetworkIssuePage },
+  { path: '*', redirect: { name: 404, params: { resource: 'page' } } }
 ];
 
 export default new VueRouter({ mode: 'history', routes });

@@ -1,11 +1,12 @@
 import axios from 'axios';
 import store from '@/store';
+import router from '@/router';
 
 const instance = axios.create({
   baseURL: 'http://localhost:4010/',
 })
 
-instance.defaults.timeout = 2000;
+instance.defaults.timeout = 5000;
 
 // instance.defaults.baseURL = 'http://localhost:4010/';
 // instance.defaults.headers.common['Authorization'] = 'efrewf';
@@ -23,8 +24,11 @@ instance.interceptors.response.use(res => {
   return res;
 },
   (err) => {
-    if (err && err.response) {
+    if (err && err.response && err.response.status > 0) {
       store.dispatch('notification/add', { type: 'error', ...err.response.data })
+    }
+    else {
+      router.push({ name: 'NetworkIssue' })
     }
   }
 );
