@@ -1,6 +1,6 @@
 
 import globalAxios from 'axios';
-import axios from '../../axios-auth';
+import axios from '../../http/axios-auth';
 import router from '../../router';
 
 function SaveToLocalStorage(authData) {

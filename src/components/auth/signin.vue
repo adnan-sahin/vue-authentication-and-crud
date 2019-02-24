@@ -7,16 +7,22 @@
           <input
             type="email"
             name="email"
-            id="email"
-            v-validate="'required | email'"
+            v-validate="'required|email'"
             class="form-control"
             v-model="email"
           >
-          <p>{{errors.first('email')}}</p>
+          <span class="v-error">{{errors.first('email')}}</span>
         </div>
         <div class="form-group">
           <label for="password">Password</label>
-          <input type="password" id="password" class="form-control" v-model="password">
+          <input
+            type="password"
+            class="form-control"
+            name="password"
+            v-validate="'required'"
+            v-model="password"
+          >
+          <span class="v-error">{{errors.first('password')}}</span>
         </div>
         <div class="form-group">
           <button class="btn btn-primary" type="submit">Submit</button>
@@ -28,7 +34,6 @@
 
 <script>
 import { mapActions } from "vuex";
-import { required, email, minLength } from "vuelidate/lib/validators";
 export default {
   data() {
     return {
