@@ -3,7 +3,7 @@
     <transition name="fade">
       <div v-if="notification" class="bar" :class="notificationClass">
         <span @click="clear" class="close">X</span>
-        {{notification.id+" : "+ notification.message}}
+        {{ notification.message}}
       </div>
     </transition>
   </div>

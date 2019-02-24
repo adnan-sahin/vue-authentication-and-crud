@@ -5,7 +5,7 @@ import WelcomePage from '../components/welcome/welcome.vue';
 import DashboardPage from '../components/dashboard/dashboard.vue';
 import SignupPage from '../components/auth/signup.vue';
 import SigninPage from '../components/auth/signin.vue';
-import BooksPage from '../components/Books/List.vue';
+import BooksPage from '../components/Book/List.vue';
 
 
 import store from '../store/modules/user';
@@ -27,9 +27,9 @@ const routes = [
       } else {
         next('/signin');
       }
-    },
+    }
   },
-  { path: '/books', component: BooksPage },
+  { path: '/books', component: BooksPage }
 ];
 
 export default new VueRouter({ mode: 'history', routes });
