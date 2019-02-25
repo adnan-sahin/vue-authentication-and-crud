@@ -1,69 +1,83 @@
 import axios from '@/http/axios';
-import * as types from '../mutation-types';
-const initalState = {
-  books: [],
-  currentBook: {
+import * as mutationTypes from '../mutation-types';
+const initalState = () => {
+  return {
+    _id: '',
     title: '',
     genre: '',
     author: '',
     read: false
+
   }
 }
 const state = {
-  ...initalState
+  books: [],
+  selectedBook: initalState()
 }
 
 const mutations = {
-  [types.RECEIVE_BOOKS](state, books) {
+  [mutationTypes.SET_BOOKS](state, books) {
     state.books = books;
   },
-  [types.RECEIVE_BOOK](state, book) {
-    state.currentBook = book;
+  [mutationTypes.SET_BOOK](state, book) {
+    state.selectedBook = book;
   },
-  [types.CLEAR_BOOK](state) {
-    state.currentBook = initalState;
+  [mutationTypes.ADD_BOOK](state, book) {
+    state.books.unshift(book)
+  },
+  [mutationTypes.UPDATE_BOOK](state, book) {
+    let index = state.books.findIndex(item => item._id == book._id);
+    if (index != -1) {
+      state.books.splice(index, 1, book)
+    }
+  },
+  [mutationTypes.DELETE_BOOK](state, id) {
+    let index = state.books.findIndex(item => item._id == id);
+    if (index != -1) {
+      state.books.splice(index, 1)
+    }
+  },
+  [mutationTypes.RESET_BOOK](state) {
+    state.selectedBook = initalState();
   },
 }
 
 const actions = {
-  getBooks({ commit }) {
-    axios.get('api/books').then((res) => {
-      commit(types.RECEIVE_BOOKS, res.data);
+  async getBooks({ commit }) {
+    return await axios.get('api/books').then((res) => {
+      commit(mutationTypes.SET_BOOKS, res.data);
     });
   },
-  getBookById({ commit }, id) {
-    axios.get('api/books/' + id).then((res) => {
-      commit(types.RECEIVE_BOOK, res.data);
+  async getById({ commit }, id) {
+    return await axios.get('api/books/' + id).then((res) => {
+      commit(mutationTypes.SET_BOOK, res.data);
     })
   },
-  update(context, payload) {
+  async  update({ commit }, payload) {
     const { title, author, genre, read } = payload;
-    axios.put('api/books/' + payload._id, { title, author, genre, read }).then(() => {
-      context.dispatch('getBooks');
-      context.commit(types.CLEAR_BOOK);
+    return await axios.put('api/books/' + payload._id, { title, author, genre, read }).then(() => {
+      commit(mutationTypes.UPDATE_BOOK, payload)
     });
   },
-  save(context, payload) {
+  async create({ commit }, payload) {
     const { title, author, genre, read } = payload;
-    axios.post('api/books', { title, author, genre, read }).then(() => {
-      context.dispatch('getBooks');
-      context.commit(types.CLEAR_BOOK);
+    return await axios.post('api/books', { title, author, genre, read }).then(() => {
+      commit(mutationTypes.ADD_BOOK, payload)
     });
   },
-  delete(context, id) {
-    axios.delete('api/books/' + id).then(() => {
-      context.dispatch('getBooks');
-      context.commit(types.CLEAR_BOOK);
+  async delete({ commit }, id) {
+    return await axios.delete('api/books/' + id).then(() => {
+      commit(mutationTypes.DELETE_BOOK, id)
     })
   },
-  clearBook({ commit }) {
-    commit(types.CLEAR_BOOK);
+  async reset({ commit }) {
+    return await commit(mutationTypes.RESET_BOOK);
   }
 }
 
 const getters = {
   books: state => state.books,
-  currentBook: state => state.currentBook
+  selectedBook: state => state.selectedBook
 }
 
 export default {

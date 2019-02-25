@@ -1,9 +1,9 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import userModule from './modules/user';
-import bookModule from './modules/book';
-import notificationModule from './modules/notification';
+import user from './modules/user';
+import book from './modules/book';
+import notification from './modules/notification';
 
 Vue.use(Vuex);
 
@@ -15,8 +15,8 @@ export default new Vuex.Store({
   state: {},
   getters: {},
   modules: {
-    user: userModule,
-    book: bookModule,
-    notification: notificationModule
+    user,
+    book,
+    notification
   },
 });

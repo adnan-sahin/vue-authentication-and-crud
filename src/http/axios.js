@@ -4,9 +4,9 @@ import router from '@/router';
 
 const instance = axios.create({
   baseURL: 'http://localhost:4010/',
+  timeout: 5000
 })
 
-instance.defaults.timeout = 5000;
 
 // instance.defaults.baseURL = 'http://localhost:4010/';
 // instance.defaults.headers.common['Authorization'] = 'efrewf';

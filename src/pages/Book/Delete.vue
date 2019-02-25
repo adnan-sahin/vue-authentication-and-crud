@@ -25,13 +25,14 @@ export default {
   },
   computed: {
     book() {
-      return this.$store.getters["book/currentBook"];
+      return this.$store.getters["book/selectedBook"];
     }
   },
   methods: {
     deleteBook() {
-      this.$store.dispatch("book/delete", this.book._id);
-      this.closeDialog();
+      this.$store.dispatch("book/delete", this.book._id).then(() => {
+        this.closeDialog();
+      });
     },
     closeDialog() {
       this.$emit("close");

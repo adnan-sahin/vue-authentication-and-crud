@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import Header from "./components/header/header.vue";
+import Header from "./components/Header/Header.vue";
 import NotificationContainer from "./components/Notification/NotificationContainer.vue";
 import { mapActions } from "vuex";
 export default {

@@ -17,8 +17,6 @@
             <td>{{ props.item.read }}</td>
             <td>
               <v-btn @click="editBook(props.item._id)" color="warning" :small="true">Edit</v-btn>
-            </td>
-            <td>
               <v-btn @click="deleteBook(props.item._id)" color="error" :small="true">Delete</v-btn>
             </td>
           </template>
@@ -46,13 +44,13 @@ export default {
       headers: [
         {
           text: "Title",
-          value: "title"
+          value: "title",
+          sortable: false
         },
         { text: "Genre", value: "genre" },
         { text: "Author", value: "author" },
         { text: "Read", value: "read" },
-        { text: "", value: "edit" },
-        { text: "", value: "delete" }
+        { text: "Actions", value: "" }
       ]
     };
   },
@@ -60,24 +58,28 @@ export default {
     ...mapGetters("book", ["books"])
   },
   methods: {
-    ...mapActions("book", ["getBooks", "getBookById", "clearBook"]),
+    ...mapActions("book", ["getBooks", "getById", "reset"]),
     addBook() {
       this.dialog = true;
       this.isEdit = false;
     },
     editBook(id) {
-      this.dialog = true;
-      this.isEdit = true;
-      this.getBookById(id);
+      this.getById(id).then(() => {
+        this.isEdit = true;
+        this.dialog = true;
+      });
     },
     deleteBook(id) {
-      this.deleteConfirm = true;
-      this.getBookById(id);
+      this.getById(id).then(() => {
+        this.deleteConfirm = true;
+      });
     },
     closeDialog() {
-      this.dialog = false;
-      this.deleteConfirm = false;
-      this.clearBook();
+      this.reset().then(() => {
+        this.dialog = false;
+        this.isEdit = false;
+        this.deleteConfirm = false;
+      });
     }
   },
   async mounted() {

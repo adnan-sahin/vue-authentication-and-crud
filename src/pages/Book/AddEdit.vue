@@ -26,6 +26,7 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import * as _ from "lodash";
 export default {
   props: {
     isOpen: { type: Boolean, required: true },
@@ -35,20 +36,22 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters("book", { book: "currentBook" })
+    book() {
+      return _.cloneDeep(this.$store.state.book.selectedBook);
+    }
   },
   methods: {
-    ...mapActions("book", { updateBook: "update", saveBook: "save" }),
+    ...mapActions("book", ["create", "update"]),
     closeDialog() {
       this.$emit("close");
     },
     save() {
       if (this.isEdit) {
-        this.updateBook(this.book).then(() => {
+        this.update(this.book).then(() => {
           this.closeDialog();
         });
       } else {
-        this.saveBook(this.book).then(() => {
+        this.create(this.book).then(() => {
           this.closeDialog();
         });
       }
