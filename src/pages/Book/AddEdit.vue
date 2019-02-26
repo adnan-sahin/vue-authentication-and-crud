@@ -5,10 +5,10 @@
         <v-card-title class="headline grey lighten-2" primary-title>{{isEdit?'Edit':'Add'}}</v-card-title>
         <v-container>
           <div>
-            <v-text-field label="Title" v-model="book.title"></v-text-field>
-            <v-text-field label="Genre" v-model="book.genre"></v-text-field>
-            <v-text-field label="Author" v-model="book.author"></v-text-field>
-            <v-checkbox v-model="book.read" label="Read" data-vv-name="read" type="checkbox"></v-checkbox>
+            <v-text-field label="Title" v-model="item.title"></v-text-field>
+            <v-text-field label="Genre" v-model="item.genre"></v-text-field>
+            <v-text-field label="Author" v-model="item.author"></v-text-field>
+            <v-checkbox v-model="item.read" label="Read" data-vv-name="read" type="checkbox"></v-checkbox>
           </div>
         </v-container>
 
@@ -26,19 +26,11 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import * as _ from "lodash";
 export default {
   props: {
     isOpen: { type: Boolean, required: true },
-    isEdit: { type: Boolean, required: true }
-  },
-  data() {
-    return {};
-  },
-  computed: {
-    book() {
-      return _.cloneDeep(this.$store.state.book.selectedBook);
-    }
+    isEdit: { type: Boolean, required: true },
+    item: { type: Object, required: true }
   },
   methods: {
     ...mapActions("book", ["create", "update"]),
@@ -47,11 +39,11 @@ export default {
     },
     save() {
       if (this.isEdit) {
-        this.update(this.book).then(() => {
+        this.update(this.item).then(() => {
           this.closeDialog();
         });
       } else {
-        this.create(this.book).then(() => {
+        this.create(this.item).then(() => {
           this.closeDialog();
         });
       }

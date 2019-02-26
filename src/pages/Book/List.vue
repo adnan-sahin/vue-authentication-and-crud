@@ -23,8 +23,8 @@
         </v-data-table>
       </v-container>
     </v-card>
-    <add-edit :is-open="dialog" @close="closeDialog" :is-edit="isEdit"></add-edit>
-    <delete :is-open="deleteConfirm" @close="closeDialog"></delete>
+    <add-edit :is-open="dialog" :item="book" @close="closeDialog" :is-edit="isEdit"></add-edit>
+    <delete :is-open="deleteConfirm" :item="book" @close="closeDialog"></delete>
   </div>
 </template>
 
@@ -36,6 +36,7 @@ export default {
   components: { AddEdit, Delete },
   data() {
     return {
+      book: {},
       dialog: false,
       deleteConfirm: false,
       isEdit: true,
@@ -58,28 +59,29 @@ export default {
     ...mapGetters("book", ["books"])
   },
   methods: {
-    ...mapActions("book", ["getBooks", "getById", "reset"]),
+    ...mapActions("book", ["getBooks", "getById"]),
     addBook() {
       this.dialog = true;
       this.isEdit = false;
     },
     editBook(id) {
-      this.getById(id).then(() => {
+      this.getById(id).then(res => {
+        this.book = res;
         this.isEdit = true;
         this.dialog = true;
       });
     },
     deleteBook(id) {
-      this.getById(id).then(() => {
+      this.getById(id).then(res => {
+        this.book = res;
         this.deleteConfirm = true;
       });
     },
     closeDialog() {
-      this.reset().then(() => {
-        this.dialog = false;
-        this.isEdit = false;
-        this.deleteConfirm = false;
-      });
+      this.dialog = false;
+      this.isEdit = false;
+      this.deleteConfirm = false;
+      this.book = {};
     }
   },
   async mounted() {

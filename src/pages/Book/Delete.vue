@@ -21,16 +21,12 @@
 <script>
 export default {
   props: {
-    isOpen: { type: Boolean, required: true }
-  },
-  computed: {
-    book() {
-      return this.$store.getters["book/selectedBook"];
-    }
+    isOpen: { type: Boolean, required: true },
+    item: { type: Object, required: true }
   },
   methods: {
     deleteBook() {
-      this.$store.dispatch("book/delete", this.book._id).then(() => {
+      this.$store.dispatch("book/delete", this.item._id).then(() => {
         this.closeDialog();
       });
     },
