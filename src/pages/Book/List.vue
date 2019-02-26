@@ -16,8 +16,8 @@
             <td>{{ props.item.author }}</td>
             <td>{{ props.item.read }}</td>
             <td>
-              <v-btn @click="editBook(props.item._id)" color="warning" :small="true">Edit</v-btn>
-              <v-btn @click="deleteBook(props.item._id)" color="error" :small="true">Delete</v-btn>
+              <v-btn @click="editBook(props.item.id)" color="warning" :small="true">Edit</v-btn>
+              <v-btn @click="deleteBook(props.item.id)" color="error" :small="true">Delete</v-btn>
             </td>
           </template>
         </v-data-table>

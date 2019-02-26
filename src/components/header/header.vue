@@ -18,6 +18,9 @@
           <router-link to="/books">Books</router-link>
         </li>
         <li v-if="auth">
+          <router-link :to="{name:'Roles'}">Roles</router-link>
+        </li>
+        <li v-if="auth">
           <span class="sign-out" @click="signOut" to="/signout">Sign Out</span>
         </li>
       </ul>

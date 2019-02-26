@@ -13,13 +13,13 @@ const mutations = {
     state.books.unshift(book)
   },
   [mutationTypes.UPDATE_BOOK](state, book) {
-    let index = state.books.findIndex(item => item._id == book._id);
+    let index = state.books.findIndex(item => item.id == book.id);
     if (index != -1) {
       state.books.splice(index, 1, book)
     }
   },
   [mutationTypes.DELETE_BOOK](state, id) {
-    let index = state.books.findIndex(item => item._id == id);
+    let index = state.books.findIndex(item => item.id == id);
     if (index != -1) {
       state.books.splice(index, 1)
     }
@@ -28,30 +28,30 @@ const mutations = {
 
 const actions = {
   async getBooks({ commit }) {
-    return await axios.get('api/books').then((res) => {
+    return await axios.get('/books').then((res) => {
       commit(mutationTypes.SET_BOOKS, res.data);
     });
   },
   // eslint-disable-next-line no-empty-pattern
   async getById({ }, id) {
-    return await axios.get('api/books/' + id).then((res) => {
+    return await axios.get('/books/' + id).then((res) => {
       return res.data;
     })
   },
   async  update({ commit }, payload) {
     const { title, author, genre, read } = payload;
-    return await axios.put('api/books/' + payload._id, { title, author, genre, read }).then(() => {
+    return await axios.put('/books/' + payload.id, { title, author, genre, read }).then(() => {
       commit(mutationTypes.UPDATE_BOOK, payload)
     });
   },
   async create({ commit }, payload) {
     const { title, author, genre, read } = payload;
-    return await axios.post('api/books', { title, author, genre, read }).then((res) => {
+    return await axios.post('/books', { title, author, genre, read }).then((res) => {
       commit(mutationTypes.ADD_BOOK, res.data)
     });
   },
   async delete({ commit }, id) {
-    return await axios.delete('api/books/' + id).then(() => {
+    return await axios.delete('/books/' + id).then(() => {
       commit(mutationTypes.DELETE_BOOK, id)
     })
   }

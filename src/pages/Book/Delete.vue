@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     deleteBook() {
-      this.$store.dispatch("book/delete", this.item._id).then(() => {
+      this.$store.dispatch("book/delete", this.item.id).then(() => {
         this.closeDialog();
       });
     },

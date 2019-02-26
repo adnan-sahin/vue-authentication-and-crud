@@ -3,11 +3,9 @@ import store from '@/store';
 import router from '@/router';
 
 const instance = axios.create({
-  baseURL: 'http://localhost:4010/',
+  baseURL: process.env.VUE_APP_SERVICE_BASE_URL,
   timeout: 5000
 })
-
-
 // instance.defaults.baseURL = 'http://localhost:4010/';
 // instance.defaults.headers.common['Authorization'] = 'efrewf';
 // instance.defaults.headers.get['Accepts'] = 'application/json';
