@@ -19,7 +19,9 @@
               <v-btn @click="editBook(props.item._id)" color="warning" :small="true">Edit</v-btn>
             </td>
             <td>
-              <v-btn @click="deleteBook(props.item._id)" color="error" :small="true">Delete</v-btn>
+              <v-btn @click="deleteBook(props.item._id)" color="error" :small="true">
+                <v-icon>delete</v-icon>
+              </v-btn>
             </td>
           </template>
         </v-data-table>
@@ -45,7 +47,7 @@ export default {
       loading: true,
       headers: [
         {
-          text: "Title",
+          text: this.$t("Title"),
           value: "title"
         },
         { text: "Genre", value: "genre" },
