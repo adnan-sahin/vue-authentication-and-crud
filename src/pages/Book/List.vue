@@ -1,13 +1,22 @@
 <template>
   <div>
     <v-card>
-      <v-card-title>
-        <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
-        <v-spacer></v-spacer>
-        <v-btn @click="addBook" color="primary">
-          <v-icon small>add</v-icon>Add
-        </v-btn>
-      </v-card-title>
+      <v-card-title class="headline grey lighten-2">Books</v-card-title>
+      <v-container>
+        <v-layout>
+          <v-text-field
+            v-model="search"
+            append-icon="search"
+            label="Search"
+            single-line
+            hide-details
+          ></v-text-field>
+          <v-spacer></v-spacer>
+          <v-btn @click="addBook" color="primary">
+            <v-icon small>add</v-icon>Add
+          </v-btn>
+        </v-layout>
+      </v-container>
       <v-container>
         <v-data-table :headers="headers" :items="books" :search="search" :loading="loading">
           <template slot="items" slot-scope="props">
@@ -23,17 +32,17 @@
         </v-data-table>
       </v-container>
     </v-card>
-    <add-edit :is-open="dialog" :item="book" @close="closeDialog" :is-edit="isEdit"></add-edit>
-    <delete :is-open="deleteConfirm" :item="book" @close="closeDialog"></delete>
+    <form-dialog :is-open="dialog" :item="book" @close="dialog=false" :is-edit="isEdit"></form-dialog>
+    <delete-dialog :is-open="deleteConfirm" :item="book" @close="deleteConfirm=false"></delete-dialog>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapState, mapActions } from "vuex";
-import AddEdit from "./AddEdit.vue";
-import Delete from "./Delete.vue";
+import FormDialog from "./FormDialog.vue";
+import DeleteDialog from "./DeleteDialog.vue";
 export default {
-  components: { AddEdit, Delete },
+  components: { FormDialog, DeleteDialog },
   data() {
     return {
       book: {},
@@ -61,6 +70,7 @@ export default {
   methods: {
     ...mapActions("book", ["getBooks", "getById"]),
     addBook() {
+      this.book = {};
       this.dialog = true;
       this.isEdit = false;
     },
@@ -76,12 +86,6 @@ export default {
         this.book = res;
         this.deleteConfirm = true;
       });
-    },
-    closeDialog() {
-      this.dialog = false;
-      this.isEdit = false;
-      this.deleteConfirm = false;
-      this.book = {};
     }
   },
   async mounted() {

@@ -7,9 +7,9 @@ import 'babel-polyfill';
 import Vuetify from 'vuetify';
 import 'vuetify/dist/vuetify.min.css';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 import 'nprogress/nprogress.css';
+import '@/style/main.css';
 
 import VueI18n from 'vue-i18n';
 

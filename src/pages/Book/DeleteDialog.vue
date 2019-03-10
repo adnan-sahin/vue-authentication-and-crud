@@ -4,9 +4,10 @@
       <v-card>
         <v-card-title class="headline grey lighten-2" primary-title>Delete</v-card-title>
         <v-container>
-          <v-card-text>Are you sure to delete?</v-card-text>
+          <v-card-text>
+            <h5>Are you sure to delete?</h5>
+          </v-card-text>
           <v-divider></v-divider>
-
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="default" @click="closeDialog">No</v-btn>

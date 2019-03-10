@@ -1,34 +1,37 @@
 <template>
-  <div id="signin">
-    <div class="signin-form">
-      <form @submit.prevent="onSubmit">
-        <div class="form-group">
-          <label for="email">Email address</label>
-          <input
-            type="email"
-            name="email"
-            v-validate="'required|email'"
-            class="form-control"
-            v-model="email"
-          >
-          <span class="v-error">{{errors.first('email')}}</span>
-        </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input
-            type="password"
-            class="form-control"
-            name="password"
-            v-validate="'required'"
-            v-model="password"
-          >
-          <span class="v-error">{{errors.first('password')}}</span>
-        </div>
-        <div class="form-group">
-          <button class="btn btn-primary" type="submit">Submit</button>
-        </div>
-      </form>
-    </div>
+  <div>
+    <v-layout align-center justify-center>
+      <v-flex lg5 md6 sm8 xs12>
+        <v-card class="elevation-12">
+          <v-toolbar color="primary" dark>
+            <v-toolbar-title>Sign In</v-toolbar-title>
+          </v-toolbar>
+          <v-container>
+            <v-text-field
+              prepend-icon="email"
+              label="E-mail"
+              v-model="email"
+              name="email"
+              v-validate="'required|email'"
+              :error-messages="errors.collect('email')"
+            ></v-text-field>
+            <v-text-field
+              prepend-icon="lock"
+              label="Password"
+              v-model="password"
+              type="password"
+              name="password"
+              v-validate="'required'"
+              :error-messages="errors.collect('password')"
+            ></v-text-field>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn type="submit" color="primary" @click.prevent="onSubmit">Sign In</v-btn>
+            </v-card-actions>
+          </v-container>
+        </v-card>
+      </v-flex>
+    </v-layout>
   </div>
 </template>
 
@@ -44,13 +47,19 @@ export default {
   methods: {
     ...mapActions("user", ["signIn"]),
     onSubmit() {
-      const formData = {
-        email: this.email,
-        password: this.password
-      };
-      this.signIn({
-        email: formData.email,
-        password: formData.password
+      console.log("dsf", "ok");
+      this.$validator.validate().then(result => {
+        console.log("resul sign in", result);
+        if (result) {
+          const formData = {
+            email: this.email,
+            password: this.password
+          };
+          this.signIn({
+            email: formData.email,
+            password: formData.password
+          });
+        }
       });
     }
   }
@@ -58,58 +67,4 @@ export default {
 </script>
 
 <style scoped>
-.signin-form {
-  width: 400px;
-  margin: 30px auto;
-  border: 1px solid #eee;
-  padding: 20px;
-  box-shadow: 0 2px 3px #ccc;
-}
-
-.input {
-  margin: 10px auto;
-}
-
-.input label {
-  display: block;
-  color: #4e4e4e;
-  margin-bottom: 6px;
-}
-
-.input input {
-  font: inherit;
-  width: 100%;
-  padding: 6px 12px;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-}
-
-.input input:focus {
-  outline: none;
-  border: 1px solid #4f63a1;
-  background-color: #eee;
-}
-
-.submit button {
-  border: 1px solid #445ba5;
-  color: #445ba5;
-  padding: 10px 20px;
-  font: inherit;
-  cursor: pointer;
-}
-
-.submit button:hover,
-.submit button:active {
-  background-color: #445ba5;
-  color: white;
-}
-
-.submit button[disabled],
-.submit button[disabled]:hover,
-.submit button[disabled]:active {
-  border: 1px solid #ccc;
-  background-color: transparent;
-  color: #ccc;
-  cursor: not-allowed;
-}
 </style>

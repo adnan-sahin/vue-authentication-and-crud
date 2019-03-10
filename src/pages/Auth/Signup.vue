@@ -1,110 +1,106 @@
 <template>
-  <div class="container">
-    <form @submit.prevent="onSubmit">
-      <div class="form-horizontal">
-        <div class="form-group">
-          <label for="email">E-mail</label>
-          <input
-            class="form-control"
-            type="email"
-            v-model="email"
-            name="email"
-            v-validate="'required|email'"
-          >
-          <span class="v-error">{{errors.first('email')}}</span>
-        </div>
-        <div class="form-group">
-          <label for="age">Your Age</label>
-          <input
-            class="form-control"
-            type="number"
-            v-model="age"
-            name="age"
-            v-validate="'required|numeric'"
-          >
-          <span class="v-error">{{errors.first('age')}}</span>
-        </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input
-            class="form-control"
-            type="password"
-            v-model="password"
-            name="password"
-            v-validate="'required|confirmed:confirmation'"
-          >
-          <span class="v-error">{{errors.first('password')}}</span>
-        </div>
-        <div class="form-group">
-          <label for="confirm-password">Confirm Password</label>
-          <input
-            class="form-control"
-            type="password"
-            v-model="confirmPassword"
-            name="confirmPassword"
-            v-validate="'required'"
-            ref="confirmation"
-          >
-          <span class="v-error">{{errors.first('confirmPassword')}}</span>
-        </div>
-        <div class="form-group">
-          <label for="country">Country</label>
-          <select
-            class="form-control"
-            id="country"
-            v-model="country"
-            name="country"
-            v-validate="'required'"
-          >
-            <option value>Select</option>
-            <option value="turkey">Turkey</option>
-            <option value="france">France</option>
-            <option value="usa">USA</option>
-            <option value="netherlands">Netherlands</option>
-            <option value="sweeden">Sweeden</option>
-            <option value="uk">UK</option>
-            <option value="italy">Italy</option>
-          </select>
-          <span class="v-error">{{errors.first('country')}}</span>
-        </div>
-        <div class="hobbies">
-          <h3>Add Some Interest | Hobbies</h3>
-          <button class="btn btn-success" @click="onAddHobby" type="button">Add Interest | Hobby</button>
-          <div class="hobby-list" v-for="(hobbyInput, index) in hobbyInputs" :key="hobbyInput.id">
-            <div class="form-group hobby">
-              <label :for="hobbyInput.id">Hobby #{{ index }}</label>
-              <input
-                class="form-control"
-                type="text"
-                :id="hobbyInput.id"
-                v-model="hobbyInput.value"
+  <div>
+    <v-layout justify-center>
+      <v-flex lg5 md6 sm8 xs12>
+        <v-card>
+          <v-toolbar color="primary" dark>
+            <v-toolbar-title>Sign Up</v-toolbar-title>
+          </v-toolbar>
+          <v-container>
+            <v-text-field
+              label="E-mail"
+              v-model="email"
+              name="email"
+              v-validate="'required|email'"
+              :error-messages="errors.collect('email')"
+            ></v-text-field>
+            <v-text-field
+              label="Age"
+              v-model="age"
+              name="age"
+              v-validate="'required|numeric'"
+              :error-messages="errors.collect('age')"
+            ></v-text-field>
+            <v-text-field
+              label="Password"
+              v-model="password"
+              type="password"
+              name="password"
+              v-validate="'required|confirmed:confirmation'"
+              :error-messages="errors.collect('password')"
+            ></v-text-field>
+            <v-text-field
+              label="Confirm Password"
+              v-model="confirmPassword"
+              type="password"
+              name="confirmPassword"
+              v-validate="'required'"
+              ref="confirmation"
+              :error-messages="errors.collect('confirmPassword')"
+            ></v-text-field>
+            <v-select
+              label="Country"
+              v-model="country"
+              name="country"
+              :items="countries"
+              :item-text="'name'"
+              :item-value="'id'"
+              return-object
+              v-validate="'selectRequired'"
+              :error-messages="errors.collect('country')"
+            ></v-select>
+            <div class="hobbies">
+              <h3>Add Some Interest | Hobbies</h3>
+              <v-btn color="success" @click="onAddHobby" type="button">Add Interest | Hobby</v-btn>
+              <div
+                class="hobby-list"
+                v-for="(hobbyInput, index) in hobbyInputs"
+                :key="hobbyInput.id"
               >
-              <button
-                class="btn btn-danger btn-delete"
-                @click="onDeleteHobby(hobbyInput.id)"
-                type="button"
-              >X</button>
+                <div>
+                  <label :for="hobbyInput.id">Hobby | Interest #{{ index }}</label>
+                  <v-layout align-center justify-center>
+                    <v-text-field :id="hobbyInput.id" v-model="hobbyInput.value"></v-text-field>
+                    <v-btn
+                      class="btn-delete red"
+                      dark
+                      small
+                      fab
+                      @click="onDeleteHobby(hobbyInput.id)"
+                      type="button"
+                    >X</v-btn>
+                  </v-layout>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <br>
-        <div class="form-group">
-          <input type="checkbox" id="terms" v-model="terms" name="terms" v-validate="'required'">
-          <label for="terms">Accept Terms of Use and Conditions</label>
-          <br>
-          <span class="v-error inline-block" v-show="errors.has('terms')">{{errors.first('terms')}}</span>
-        </div>
-
-        <div class="form-group">
-          <button class="btn btn-primary" type="submit">Submit</button>
-        </div>
-      </div>
-    </form>
+            <v-checkbox
+              label="Accept Terms of Use and Conditions"
+              :v-model="terms"
+              v-validate="'required'"
+              name="terms"
+              :error-messages="errors.collect('terms')"
+            ></v-checkbox>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="primary" @click.prevent="signUp">Sign Up</v-btn>
+            </v-card-actions>
+          </v-container>
+        </v-card>
+      </v-flex>
+    </v-layout>
   </div>
 </template>
 
 <script>
 import { mapActions } from "vuex";
+import { Validator } from "vee-validate";
+Validator.extend("selectRequired", {
+  getMessage: field => "The " + field + " field is required.",
+  validate: value => {
+    return value.id != null;
+  }
+});
+
 export default {
   data() {
     return {
@@ -112,9 +108,17 @@ export default {
       age: null,
       password: "",
       confirmPassword: "",
-      country: "turkey",
       hobbyInputs: [],
-      terms: false
+      terms: false,
+      country: { id: null, name: null },
+      countries: [
+        { id: "1", name: "Turkey" },
+        { id: "2", name: "Germany" },
+        { id: "3", name: "France" },
+        { id: "4", name: "Italy" },
+        { id: "5", name: "Netherland6" },
+        { id: "6", name: "England" }
+      ]
     };
   },
   methods: {
@@ -129,7 +133,7 @@ export default {
     onDeleteHobby(id) {
       this.hobbyInputs = this.hobbyInputs.filter(hobby => hobby.id !== id);
     },
-    onSubmit() {
+    signUp() {
       this.$validator.validate().then(result => {
         if (result) {
           const formData = {
@@ -150,25 +154,4 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  max-width: 600px;
-}
-.hobby-list {
-  margin-top: 30px;
-}
-.hobby {
-  display: flex;
-  flex-direction: row;
-}
-.btn-delete {
-  height: 35px;
-  margin-left: 5px;
-}
-
-.hobbies input {
-  width: 90%;
-}
-.inline-block {
-  display: inline-block;
-}
 </style>
