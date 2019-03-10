@@ -57,10 +57,10 @@ export default {
           value: "title",
           sortable: false
         },
-        { text: "Genre", value: "genre" },
-        { text: "Author", value: "author" },
-        { text: "Read", value: "read" },
-        { text: "Actions", value: "" }
+        { text: "Genre", value: "genre", align: "center" },
+        { text: "Author", value: "author", align: "center" },
+        { text: "Read", value: "read", align: "center" },
+        { text: "Actions", value: "", align: "center" }
       ]
     };
   },

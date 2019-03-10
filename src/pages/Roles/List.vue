@@ -12,10 +12,13 @@
         <v-data-table :headers="headers" :items="roles" :search="search" :loading="loading">
           <template slot="items" slot-scope="props">
             <td>{{props.item.name }}</td>
-            <td>{{props.item.isActive }}</td>
             <td>
-              <v-btn color="warning" @click="editRole(props.item.id)">Edit</v-btn>
-              <v-btn color="error" @click="deleteRole(props.item.id)">Delete</v-btn>
+              <v-icon v-if="props.item.isActive">done</v-icon>
+              <v-icon v-else-if="!props.item.isActive">clear</v-icon>
+            </td>
+            <td>
+              <v-btn color="warning" small @click="editRole(props.item.id)">Edit</v-btn>
+              <v-btn color="error" small @click="deleteRole(props.item.id)">Delete</v-btn>
             </td>
           </template>
         </v-data-table>
@@ -34,9 +37,9 @@ export default {
       role: {},
       search: "",
       headers: [
-        { text: "Name", value: "name" },
-        { text: "Active", value: "isActive" },
-        { text: "Actions", value: "" }
+        { text: "Name", value: "name", align: "center" },
+        { text: "Active", value: "isActive", align: "center" },
+        { text: "Actions", value: "", align: "center" }
       ]
     };
   },

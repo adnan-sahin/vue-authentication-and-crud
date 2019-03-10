@@ -4,6 +4,11 @@
       "id": 1,
       "name": "Role 1",
       "isActive": true
+    },
+    {
+      "id": 1,
+      "name": "Role 2",
+      "isActive": false
     }
   ],
   "books": [
