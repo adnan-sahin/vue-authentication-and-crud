@@ -23,15 +23,53 @@ const mutations = {
     if (index != -1) {
       state.books.splice(index, 1)
     }
-  }
+  },
 }
 
 const actions = {
-  async getBooks({ commit }) {
-    return await axios.get('/books').then((res) => {
-      commit(mutationTypes.SET_BOOKS, res.data);
-    });
+  getBooks(context, pagination) {
+
+    return new Promise((resolve, reject) => {
+
+      const { sortBy, descending, page, rowsPerPage } = pagination;
+      console.log('page', page);
+      console.log('pagination', pagination);
+
+      axios.get('/books?_start=' + (page - 1) * rowsPerPage + "&_limit=" + rowsPerPage).then(res => {
+        console.log('ress', res);
+        let items = res.data;
+        const totalItems = Number(res.headers['x-total-count']);
+
+        if (sortBy) {
+          items = items.sort((a, b) => {
+            const sortA = a[sortBy]
+            const sortB = b[sortBy]
+
+            if (descending) {
+              if (sortA < sortB) return 1
+              if (sortA > sortB) return -1
+              return 0
+            } else {
+              if (sortA < sortB) return -1
+              if (sortA > sortB) return 1
+              return 0
+            }
+          })
+        }
+        context.commit(mutationTypes.SET_BOOKS, items)
+        resolve({ items, totalItems })
+      })
+
+    }
+    )
   },
+
+  // async getBooks({ commit }) {
+  //   return await axios.get('/books').then((res) => {
+  //     commit(mutationTypes.SET_BOOKS, res.data);
+  //     commit('setItems', res.data);
+  //   });
+  // },
   // eslint-disable-next-line no-empty-pattern
   async getById({ }, id) {
     return await axios.get('/books/' + id).then((res) => {
@@ -59,7 +97,13 @@ const actions = {
 
 const getters = {
   books: state => state.books,
-  selectedBook: state => state.selectedBook
+  selectedBook: state => state.selectedBook,
+  loading(state) {
+    return state.loading
+  },
+  pagination(state) {
+    return state.pagination
+  }
 }
 
 export default {

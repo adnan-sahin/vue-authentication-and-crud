@@ -18,7 +18,14 @@
         </v-layout>
       </v-container>
       <v-container>
-        <v-data-table :headers="headers" :items="books" :search="search" :loading="loading">
+        <v-data-table
+          :headers="headers"
+          :items="items"
+          :loading="loading"
+          :pagination.sync="pagination"
+          :total-items="totalItems"
+          :rows-per-page-items="[4,8,16]"
+        >
           <template slot="items" slot-scope="props">
             <td>{{ props.item.title }}</td>
             <td>{{ props.item.genre }}</td>
@@ -46,6 +53,9 @@ export default {
   data() {
     return {
       book: {},
+      items: [],
+      totalItems: 8,
+      pagination: {},
       dialog: false,
       deleteConfirm: false,
       isEdit: true,
@@ -60,15 +70,46 @@ export default {
         { text: "Genre", value: "genre", align: "center" },
         { text: "Author", value: "author", align: "center" },
         { text: "Read", value: "read", align: "center" },
-        { text: "Actions", value: "", align: "center" }
+        { text: "Actions", value: "", align: "center", sortable: false }
       ]
     };
   },
-  computed: {
-    ...mapGetters("book", ["books"])
+  watch: {
+    pagination: {
+      handler() {
+        this.loading = true;
+        this.$store
+          .dispatch("book/getBooks", this.pagination)
+          .then(result => {
+            this.items = result.items;
+            this.totalItems = result.totalItems;
+            this.loading = false;
+          });
+      },
+      deep: true
+    }
   },
+  computed: {
+    // pagination: {
+    //   get: function() {
+    //     return this.$store.getters["book/pagination"];
+    //   },
+    //   set: function(value) {
+    //     this.$store.commit("book/setPagination", value);
+    //   }
+    // }
+  },
+  // mounted() {
+  //   this.$store.dispatch("book/queryItems", this.pagination).then(result => {
+  //     console.log("result", result);
+  //     this.items = result.items;
+  //     console.log("result.totalItems", result.totalItems);
+  //     this.totalItems = result.totalItems;
+  //     this.loading = false;
+  //   });
+  // },
   methods: {
-    ...mapActions("book", ["getBooks", "getById"]),
+    ...mapActions("book", ["getById"]),
     addBook() {
       this.book = {};
       this.dialog = true;
@@ -87,11 +128,6 @@ export default {
         this.deleteConfirm = true;
       });
     }
-  },
-  async mounted() {
-    await this.getBooks().then(() => {
-      this.loading = false;
-    });
   }
 };
 </script>
