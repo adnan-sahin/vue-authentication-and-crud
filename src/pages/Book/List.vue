@@ -9,6 +9,7 @@
             append-icon="search"
             label="Search"
             single-line
+            hide-actions
             hide-details
           ></v-text-field>
           <v-spacer></v-spacer>
@@ -24,7 +25,6 @@
           :loading="loading"
           :pagination.sync="pagination"
           :total-items="totalItems"
-          :rows-per-page-items="[4,8,16]"
         >
           <template slot="items" slot-scope="props">
             <td>{{ props.item.title }}</td>
@@ -48,19 +48,17 @@
 import { mapGetters, mapState, mapActions } from "vuex";
 import FormDialog from "./FormDialog.vue";
 import DeleteDialog from "./DeleteDialog.vue";
+import paginationMixin from "../mixins/paginationMixin";
 export default {
   components: { FormDialog, DeleteDialog },
+  mixins: [paginationMixin],
   data() {
     return {
       book: {},
-      items: [],
-      totalItems: 8,
-      pagination: {},
       dialog: false,
       deleteConfirm: false,
       isEdit: true,
       search: "",
-      loading: true,
       headers: [
         {
           text: "Title",
@@ -74,42 +72,8 @@ export default {
       ]
     };
   },
-  watch: {
-    pagination: {
-      handler() {
-        this.loading = true;
-        this.$store
-          .dispatch("book/getBooks", this.pagination)
-          .then(result => {
-            this.items = result.items;
-            this.totalItems = result.totalItems;
-            this.loading = false;
-          });
-      },
-      deep: true
-    }
-  },
-  computed: {
-    // pagination: {
-    //   get: function() {
-    //     return this.$store.getters["book/pagination"];
-    //   },
-    //   set: function(value) {
-    //     this.$store.commit("book/setPagination", value);
-    //   }
-    // }
-  },
-  // mounted() {
-  //   this.$store.dispatch("book/queryItems", this.pagination).then(result => {
-  //     console.log("result", result);
-  //     this.items = result.items;
-  //     console.log("result.totalItems", result.totalItems);
-  //     this.totalItems = result.totalItems;
-  //     this.loading = false;
-  //   });
-  // },
   methods: {
-    ...mapActions("book", ["getById"]),
+    ...mapActions("book", { getItems: "getBooks", getById: "getById" }),
     addBook() {
       this.book = {};
       this.dialog = true;
@@ -132,7 +96,7 @@ export default {
 };
 </script>
 
-<style <style scoped>
+<style  scoped>
 </style>
 
 

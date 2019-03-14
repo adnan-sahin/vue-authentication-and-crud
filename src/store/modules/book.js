@@ -32,7 +32,7 @@ const actions = {
     console.log('page', page);
     console.log('pagination', pagination);
 
-    return await axios.get('/books?_start=' + (page - 1) * rowsPerPage + "&_limit=" + rowsPerPage).then(res => {
+    return await axios.get('/books?_page=' + page + "&_limit=" + rowsPerPage).then(res => {
       console.log('ress', res);
       let items = res.data;
       const totalItems = Number(res.headers['x-total-count']);

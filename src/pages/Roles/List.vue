@@ -9,7 +9,14 @@
         </v-btn>
       </v-card-title>
       <v-container>
-        <v-data-table :headers="headers" :items="roles" :search="search" :loading="loading">
+        <v-data-table
+          :headers="headers"
+          :items="items"
+          :search="search"
+          :loading="loading"
+          :pagination.sync="pagination"
+          :total-items="totalItems"
+        >
           <template slot="items" slot-scope="props">
             <td>{{props.item.name }}</td>
             <td>
@@ -29,11 +36,11 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-
+import paginationMixin from "../mixins/paginationMixin";
 export default {
+  mixins: [paginationMixin],
   data() {
     return {
-      loading: true,
       role: {},
       search: "",
       headers: [
@@ -43,18 +50,10 @@ export default {
       ]
     };
   },
-  computed: {
-    ...mapGetters("role", ["roles"])
-  },
   methods: {
-    ...mapActions("role", ["getRoles"]),
+    ...mapActions("role", { getItems: "getRoles" }),
     addRole() {},
     deleteRole() {}
-  },
-  mounted() {
-    this.getRoles().then(() => {
-      this.loading = false;
-    });
   }
 };
 </script>
