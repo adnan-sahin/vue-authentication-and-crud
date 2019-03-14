@@ -12,7 +12,6 @@
         <v-data-table
           :headers="headers"
           :items="items"
-          :search="search"
           :loading="loading"
           :pagination.sync="pagination"
           :total-items="totalItems"
