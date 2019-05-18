@@ -5,7 +5,6 @@ const state = {
   notifications: []
 };
 
-
 const mutations = {
   [mutationTypes.ADD_NOTIFICATION](state, payload) {
     state.notifications.push(payload);

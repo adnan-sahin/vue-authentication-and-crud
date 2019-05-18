@@ -1,13 +1,15 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-import WelcomePage from '../components/welcome/welcome.vue';
-import DashboardPage from '../components/dashboard/dashboard.vue';
-import SignupPage from '../components/auth/signup.vue';
-import SigninPage from '../components/auth/signin.vue';
-import BooksPage from '../components/Book/List.vue';
-import NotFoundPage from '../components/Error/NotFound.vue';
-import NetworkIssuePage from '../components/Error/NetworkIssue.vue';
+import WelcomePage from '../pages/Welcome/Welcome.vue';
+import DashboardPage from '../pages/Dashboard/Dashboard.vue';
+import SignupPage from '../pages/Auth/Signup.vue';
+import SigninPage from '../pages/Auth/Signin.vue';
+import BookPage from '../pages/Book/List.vue';
+import RolePage from '../pages/Roles/List.vue';
+import NotFoundPage from '../pages/Error/NotFound.vue';
+import NetworkIssuePage from '../pages/Error/NetworkIssue.vue';
+
 
 
 import store from '../store/modules/user';
@@ -31,7 +33,8 @@ const routes = [
       }
     }
   },
-  { name: 'Books', path: '/books', component: BooksPage },
+  { name: 'Books', path: '/books', component: BookPage },
+  { name: 'Roles', path: '/roles', component: RolePage },
   { name: '404', path: '/404', component: NotFoundPage, props: true },
   { name: 'NetworkIssue', path: '/network-issue', component: NetworkIssuePage },
   { path: '*', redirect: { name: 404, params: { resource: 'page' } } }

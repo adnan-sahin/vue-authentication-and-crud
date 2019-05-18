@@ -18,6 +18,9 @@
           <router-link to="/books">Books</router-link>
         </li>
         <li v-if="auth">
+          <router-link :to="{name:'Roles'}">Roles</router-link>
+        </li>
+        <li v-if="auth">
           <span class="sign-out" @click="signOut" to="/signout">Sign Out</span>
         </li>
       </ul>
@@ -92,6 +95,8 @@ li a:hover,
 li a:active,
 li a.router-link-active {
   color: #fa923f;
+  /* transform: scale(1.01); */
+  /* box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.2), 0 1px 15px 0 rgba(0, 0, 0, 0.19); */
 }
 .sign-out {
   cursor: pointer;
