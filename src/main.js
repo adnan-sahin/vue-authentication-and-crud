@@ -5,15 +5,12 @@ import store from './store';
 import VeeValidate, { ValidationProvider } from 'vee-validate';
 import 'babel-polyfill';
 import Vuetify from 'vuetify';
+import i18n from './i18n/i18n';
 import 'vuetify/dist/vuetify.min.css';
 
 
 import 'nprogress/nprogress.css';
 import '@/style/main.css';
-
-import VueI18n from 'vue-i18n';
-
-Vue.use(VueI18n);
 
 Vue.use(Vuetify);
 
@@ -24,7 +21,8 @@ Vue.component(ValidationProvider);
 Vue.config.productionTip = false;
 
 new Vue({
-  render: h => h(App),
   router,
-  store
+  store,
+  i18n,
+  render: h => h(App)
 }).$mount('#app');
