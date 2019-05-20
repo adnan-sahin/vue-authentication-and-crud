@@ -2,6 +2,7 @@
   <div>
     <v-card>
       <v-card-title>
+        {{$t("RoleTitle")}}
         <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
         <v-spacer></v-spacer>
         <v-btn @click="addRole" color="primary">

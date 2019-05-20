@@ -5,6 +5,7 @@ import user from './modules/user';
 import book from './modules/book';
 import notification from './modules/notification';
 import role from './modules/role';
+import localization from './modules/localization';
 
 Vue.use(Vuex);
 
@@ -19,6 +20,7 @@ export default new Vuex.Store({
     user,
     book,
     notification,
-    role
-  },
+    role,
+    localization
+  }
 });

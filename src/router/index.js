@@ -9,9 +9,7 @@ import BookPage from '../pages/Book/List.vue';
 import RolePage from '../pages/Roles/List.vue';
 import NotFoundPage from '../pages/Error/NotFound.vue';
 import NetworkIssuePage from '../pages/Error/NetworkIssue.vue';
-
-
-
+import { loadLanguageAsync } from '@/i18n';
 import store from '../store/modules/user';
 
 Vue.use(VueRouter);
@@ -19,7 +17,8 @@ Vue.use(VueRouter);
 // eslint-disable-next-line no-sparse-arrays
 const routes = [
   { name: 'Welcome', path: '/', component: WelcomePage },
-  { name: 'Signup', path: '/signup', component: SignupPage }, ,
+  { name: 'Signup', path: '/signup', component: SignupPage },
+  ,
   { name: 'SignIn', path: '/signin', component: SigninPage },
   {
     name: 'Dashboard',
@@ -40,4 +39,10 @@ const routes = [
   { path: '*', redirect: { name: 404, params: { resource: 'page' } } }
 ];
 
-export default new VueRouter({ mode: 'history', routes });
+const router = new VueRouter({ mode: 'history', routes });
+router.beforeEach((to, from, next) => {
+  const lang = 'en';
+  loadLanguageAsync(lang).then(() => next());
+});
+
+export default router;

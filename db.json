@@ -139,5 +139,21 @@
       "read": true,
       "id": "Wudw37Q"
     }
-  ]
+  ],
+  "languages": [
+    {
+      "name": "English",
+      "code": "en"
+    },
+    {
+      "name": "French",
+      "code": "fr"
+    }
+  ],
+  "localizationsEn": {
+    "welcomeMsg": "Welcome to Your Vue.js App(en)",
+    "Title": "Title (en)",
+    "RoleTitle": "Roles(en)"
+  },
+  "localizationsFr": { "welcomeMsg": "Welcome to Your Vue.js App(fr)", "Title": "Title (fr)", "RoleTitle": "Roles(fr)" }
 }

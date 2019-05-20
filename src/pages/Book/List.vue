@@ -61,7 +61,7 @@ export default {
       search: "",
       headers: [
         {
-          text: "Title",
+          text: this.$t("Title"),
           value: "title",
           sortable: false
         },

@@ -27,6 +27,9 @@
         <span>Sign Out</span>
         <v-icon>exit_to_app</v-icon>
       </v-btn>
+      <ul>
+        <li></li>
+      </ul>
     </v-toolbar>
   </div>
 </template>

@@ -5,9 +5,8 @@ import store from './store';
 import VeeValidate, { ValidationProvider } from 'vee-validate';
 import 'babel-polyfill';
 import Vuetify from 'vuetify';
-import i18n from './i18n/i18n';
+import i18n from './i18n';
 import 'vuetify/dist/vuetify.min.css';
-
 
 import 'nprogress/nprogress.css';
 import '@/style/main.css';
